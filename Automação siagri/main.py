@@ -6,7 +6,14 @@ import selenium
 import datetime
 import os
 
-caminho_arquivo = r"C:/Users/patrik.araujo.maia/Desktop/Automação siagri/diretorio.txt"
+# Obtém o caminho do diretório inicial do usuário
+caminho_usuario = os.path.expanduser("~")
+
+# Concatena o caminho do arquivo ao diretório inicial do usuário
+caminho_arquivo = os.path.join(caminho_usuario,"Desktop", "Automacao siagri", "diretorio.txt")
+caminho_resultado = os.path.join(caminho_usuario, "Desktop", "Automacao siagri", "resultado.txt")
+
+print(caminho_arquivo)
 
 # Lista para armazenar as linhas visíveis
 linhas_visiveis = []
@@ -27,9 +34,9 @@ for linha in linhas_visiveis:
     # Procura pelo botão anexo
     while True:
         try:
-            img = pyautogui.locateCenterOnScreen ( "clicarnocampoanexo.PNG", confidence=0.7 )
-            if img:
-                pyautogui.click ( img )
+            clicarnocampoanexo = pyautogui.locateCenterOnScreen ( "clicarnocampoanexo.PNG", confidence=0.7 )
+            if clicarnocampoanexo:
+                pyautogui.click( clicarnocampoanexo )
         except:
             time.sleep(1)
         else:
@@ -96,41 +103,37 @@ for linha in linhas_visiveis:
         #pyautogui.click ( okfsist )
 
     #Procura pelo primeiro anuncio do fsist
-    try:
-        time.sleep (2)
-        anuncio = pyautogui.locateCenterOnScreen ( "anuncio.PNG", confidence=1.0 )
-    except:
-        print ( 'não encontrou o primeiro anuncio' )
-    else:
-        pyautogui.click(anuncio)
+    #try:
+     #   time.sleep (2)
+      #  anuncio = pyautogui.locateCenterOnScreen ( "anuncio.PNG", confidence=1.0 )
+    #except:
+     #   print ( 'não encontrou o primeiro anuncio' )
+    #else:
+     #   pyautogui.click(anuncio)
     # Procura pelo segundo anuncio do fsist
-    try:
-        time.sleep(1)
-        anuncio2 = pyautogui.locateCenterOnScreen( "anuncio2.PNG", confidence=0.7 )
-    except:
-        print('não encontrou o segundo anuncio')
-    else:
-        pyautogui.click(anuncio2)
+    #try:
+     #   time.sleep(1)
+     #   anuncio2 = pyautogui.locateCenterOnScreen( "anuncio2.PNG", confidence=0.7 )
+    #except:
+     #   print('não encontrou o segundo anuncio')
+    #else:
+     #   pyautogui.click(anuncio2)
     while True:
         try:
             digiteachave = pyautogui.locateCenterOnScreen ( "digiteachave.PNG", confidence=0.7 )
+            if digiteachave:
+                pyautogui.click ( digiteachave )
+                pyautogui.hotkey ( 'ctrl', 'a' )
+                pyautogui.hotkey ( 'ctrl', 'v' )
+                pyautogui.press('enter')
         except:
-            print('clicando na coordenada errada')
             time.sleep(1)
-            pyautogui.click ( 571, 380 )
-            pyautogui.hotkey ( 'ctrl', 'a' )
-            pyautogui.hotkey ( 'ctrl', 'v' )
         else:
-            print('else quando não encontrar campo de digitar xml preenchido')
-            pyautogui.click ( 571, 380 )
-            pyautogui.hotkey ( 'ctrl', 'a' )
-            pyautogui.hotkey ( 'ctrl', 'v' )
-            pyautogui.press ( 'enter' )
             break
-            time.sleep(1)
     #Verificar quando abrir aviso no site
     try:
-        avisofsist = pyautogui.locateCenterOnScreen ( "avisofsist.PNG", confidence=0.7 )
+        time.sleep(1)
+        #avisofsist = pyautogui.locateCenterOnScreen ( "avisofsist.PNG", confidence=0.7 )
     except:
         print('Encontrou aviso fsist')
         while True:
@@ -146,7 +149,7 @@ for linha in linhas_visiveis:
             time.sleep ( 1 )
             okfsist = pyautogui.locateCenterOnScreen ( "okfsist.PNG", confidence=0.7 )
         except:
-            print ('except')
+            print ('except ok fsist')
             while True:
                 try:
                     baixarxml = pyautogui.locateCenterOnScreen ( "baixarxml.PNG", confidence=0.7 )
@@ -157,6 +160,7 @@ for linha in linhas_visiveis:
                 else:
                     break
         else:
+            print('encontrou algum erro antes de baixar o xml')
             pyautogui.click ( okfsist )
             time.sleep ( 1 )
             pyautogui.click ( 816, 381 )
@@ -184,11 +188,12 @@ for linha in linhas_visiveis:
         #okfsist = pyautogui.locateCenterOnScreen ( "okfsist.PNG", confidence=0.7 )
         #time.sleep(1)
         #pyautogui.click(okfsist)
-        time.sleep(1)
-        pyautogui.click(772,381)
-        time.sleep(0.5)
-        pyautogui.hotkey ( 'ctrl', 'v' )
-        pyautogui.press ( 'enter' )
+        print('aviso de ok fsist')
+      #  time.sleep(1)
+       # pyautogui.click(762,281)
+       # time.sleep(0.5)
+       # pyautogui.hotkey ( 'ctrl', 'v' )
+        #pyautogui.press ( 'enter' )
         while True:
             try:
                 captcha = pyautogui.locateCenterOnScreen ( "captcha.PNG", confidence=0.7 )
@@ -206,40 +211,32 @@ for linha in linhas_visiveis:
             else:
                 pyautogui.click ( baixarxml )
                 break
-    #while True:
-        #try:
-            #captcha = pyautogui.locateCenterOnScreen ( "captcha.PNG", confidence=0.7 )
-            #if captcha:
-                #pyautogui.click(captcha)
-        #except:
-            #time.sleep(1)
-        #else:
-            #break
-    #while True:
-        #try:
-            #baixarxml = pyautogui.locateCenterOnScreen ( "baixarxml.PNG", confidence=0.7 )
-            #if baixarxml:
-                #pyautogui.click ( baixarxml )
-        #except:
-            #time.sleep(1)
-        #else:
-            #break
-            #logica para erro de dowloand
-            #time.sleep(2)
+    try:
+        time.sleep(1)
+        erroaovalidarxml = pyautogui.locateCenterOnScreen("erroaovalidarxml.PNG", confidence=0.7)
+    except:
+        print('processo continuou sem erro para validar xml')
+    else:
+        print('erro ao validar xml')
+        pyautogui.click(1286,262)
+        time.sleep(1)
+        pyautogui.click(762, 281)
+        pyautogui.hotkey('ctrl', 'a')
+        pyautogui.hotkey('ctrl', 'v')
+        pyautogui.press('enter')
+
     try:
         time.sleep(1)
         errodonwload = pyautogui.locateCenterOnScreen ( "errodonwload.PNG", confidence=0.7 )
     except:
         print ( 'Continua processo' )
     else:
+        print('erro de donwload')
         pyautogui.click(566,79)
         pyautogui.write('https://www.fsist.com.br/')
         pyautogui.press('enter')
-        pyautogui.click(1289,753)
         time.sleep(1)
-        pyautogui.click(1287,767)
-        time.sleep(1)
-        pyautogui.click(735,381)
+        pyautogui.click(762,281)
         pyautogui.hotkey ( 'ctrl', 'v' )
         pyautogui.press('enter')
         while True:
@@ -302,7 +299,7 @@ for linha in linhas_visiveis:
                 pyautogui.click ( pastasiagri )
                 time.sleep(0.5)
                 pyautogui.hotkey ( 'ctrl', 'v' )
-                time.sleep(3)
+                time.sleep(2)
                 pyautogui.press ( 'enter' )
         except:
             time.sleep(1)
@@ -315,7 +312,7 @@ for linha in linhas_visiveis:
         print('Cnpj do anexo correto com o pipe')
     else:
         pyautogui.press('enter')
-        caminho_resultado = r"C:/Users/patrik.araujo.maia/Desktop/Automação siagri/resultado.txt"
+        caminho_resultado = os.path.join(caminho_usuario, "Desktop", "Automacao siagri", "resultado.txt")
         resultado = open ( caminho_resultado, "a" )
         resultado.write ( linha + ' Cnpj informado na nota divergente do pipefy.\n' )
         path = r"C:\Users\patrik.araujo.maia\Downloads"
@@ -339,7 +336,7 @@ for linha in linhas_visiveis:
         time.sleep ( 1 )
         pyautogui.click ( 998, 610 )
         time.sleep ( 1 )
-        caminho_resultado = r"C:/Users/patrik.araujo.maia/Desktop/Automação siagri/resultado.txt"
+        caminho_resultado = os.path.join(caminho_usuario, "Desktop", "Automacao siagri", "resultado.txt")
         resultado = open ( caminho_resultado, "a" )
         resultado.write ( linha + ' Destinátario incorreto, lançar manualmente.\n' )
         path = r"C:\Users\patrik.araujo.maia\Downloads"
@@ -397,7 +394,7 @@ for linha in linhas_visiveis:
     pyautogui.press ( 'enter' )
     try:
         #capturar o aviso na tela
-        time.sleep ( 2 )
+        time.sleep ( 1 )
         janeladeerro = pyautogui.locateCenterOnScreen ( "janeladeerro.PNG", confidence=0.7 )
     except:
         print('ok')
@@ -408,17 +405,13 @@ for linha in linhas_visiveis:
         pyautogui.press ('enter')
     time.sleep(0.5)
     pyautogui.click ( 770, 576 )
-    time.sleep (0.5)
     pyautogui.click ( 708, 647 )
-    time.sleep(0.5)
     pyautogui.click ( 980, 573 )
-    time.sleep (0.5)
     pyautogui.click ( 1034, 601 )
 
     condpgto = pyautogui.locateCenterOnScreen ( "condpgto.PNG", confidence=0.7 )
     if condpgto:
          pyautogui.click ( condpgto )
-         time.sleep(1)
          pyautogui.write ( '1' )
          pyautogui.press ( 'enter' )
          pyautogui.write ( '090' )
@@ -465,7 +458,7 @@ for linha in linhas_visiveis:
              time.sleep ( 1 )
              pyautogui.click ( 998, 610 )
              time.sleep(1)
-             caminho_resultado = r"C:/Users/patrik.araujo.maia/Desktop/Automação siagri/resultado.txt"
+             caminho_resultado = os.path.join(caminho_usuario, "Desktop", "Automacao siagri", "resultado.txt")
              resultado = open (caminho_resultado, "a" )
              resultado.write ( linha + ' Necessario informar o número de vinculo da nota, lançar manualmente.\n' )
              path = r"C:\Users\patrik.araujo.maia\Downloads"
@@ -510,7 +503,7 @@ for linha in linhas_visiveis:
          time.sleep ( 1 )
          pyautogui.click ( 998, 610 )
          time.sleep ( 1 )
-         caminho_resultado = r"C:/Users/patrik.araujo.maia/Desktop/Automação siagri/Resultado.txt"
+         caminho_resultado = os.path.join(caminho_usuario, "Desktop", "Automacao siagri", "resultado.txt")
          resultado = open ( caminho_resultado, "a" )
          resultado.write ( linha + ' Ct-e sem vinculo de nota, lançar manualmente.\n')
          path = r"C:\Users\patrik.araujo.maia\Downloads"
@@ -553,7 +546,6 @@ for linha in linhas_visiveis:
          else:
            pyautogui.click(siagri)
 
-         time.sleep ( 1 )
          pyautogui.hotkey ( 'ctrl', 'v' )
          pyautogui.press ( 'enter' )
          pyautogui.press ( 'enter' )
@@ -592,7 +584,7 @@ for linha in linhas_visiveis:
     # Gravar processo
     pyautogui.click(1308, 912)
     time.sleep(2)
-    caminho_resultado = r"C:/Users/patrik.araujo.maia/Desktop/Automação siagri/Resultado.txt"
+    caminho_resultado = os.path.join(caminho_usuario, "Desktop", "Automacao siagri", "resultado.txt")
     resultado = open(caminho_resultado, 'a')
     try:
         time.sleep (1)
